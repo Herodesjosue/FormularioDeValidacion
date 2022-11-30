@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+    </header>
+    <form action="" id="Formulario">
+        <h3>FORMULARIO DE REGISTRO</h3>
+        <label class="etiquetas" for="cedula" ><input class="Edits" type="text" id="cedula" name="cedula" value="" placeholder="Ingrese su Cedula"></label>
+        
+        <label class="etiquetas"for="email"><input class="Edits" type="email" id="email" name="email" value="" placeholder="Ingrese su Email"></label>
+    
+        <label class="etiquetas"for="edad"><input class="Edits" type="text" id="edad" name="edad"  value=""  placeholder="Ingrese su Edad"></label>
+        
+        <label class="etiquetas"for="login"><input class="Edits" type="text" id="login" name="login"  value=""   placeholder="Ingrese su Usuario"></label>
+        
+        <label class="etiquetas"for="password"><input class="Edits" type="password" id="password"  value="" name="password" placeholder="Ingrese su Contraseña"></label>
+        
+        <label class="etiquetas"for="cpassword"><input class="Edits" type="password" id="cpassword"  value="" name="cpassword" placeholder="Confirme la Contraseña"></label>       
+        <div class="botones">
+            <button type="submit" onclick="print()">Registrar</button>
+            <button type="button" onclick="limpiar()">Limpiar</button>
+        </div>
+    </form>
+    <div class="divi"></div>
+    <footer>
+        <div class="container">
+            <address>Herodeslugo@gmail.com</address>
+            <p>Formulario Realizado por Herodes</p>
+        </div>
+        <br>
+        <p class="about">Las validaciones se realizaron conforme a lo requerido, vease bien que
+            la clave necesita confirmacion, y caracteres especiales para poder ser aceptadas
+            por ejemplo (Herodes12.), se tomo tambien en consideracion la cedula, es solamente numeros. 
+        </p>
+    </footer>
+    <br>
+    <script src="index.js"></script>
+    <script src="jquery.validate.min.js"></script>
+    <script src="additional-methods.min.js"></script>
+    <script>
+        $.validator.addMethod("StrongPassword", function(value){
+            return /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/.test(value);
+        },"Porfavor Ingrese un Clave Fuerte");
+        $(document).ready(function(){
+            $("#Formulario").validate({
+                rules:{
+                    login:{
+                        required:true,
+                        minlength:3,
+                        alphanumeric:true,
+                        maxlength: 12
+                    },
+                    email:{
+                        required:true,
+                        email:true
+                    },
+                    password:{
+                        required:true,
+                        StrongPassword:true
+                    },
+                    cpassword:{
+                        equalTo: "#password",
+                        required:true
+                    },
+                    edad:{
+                        required:true,
+                        maxlength:2,
+                        number: true
+                    },
+                    cedula:{
+                        required:true,
+                        nowhitespace: true,
+                        number:true
+
+                    }
+                },
+                messages:{
+                    login: {
+                        required: "El Usuario es Requerido",
+                        minlength: "Ingrese al menos 3 Caracteres",
+                        alphanumeric:"Solo numero y letras para el usuario",
+                        maxlength: "Maximo 12 Caracteres"
+                    },
+                    email:{
+                    required: "El email es Requerido",
+                    email:"Ingrese un Email Valido"
+                },
+                password:{
+                        required:"La Contraseña es Requerida"
+                        
+                    },
+                cpassword:{
+                        required:"Confirme la Contraseña",
+                        equalTo:"Ingrese la misma Contraseña"
+                    },
+                edad:{
+                    required:"La edad es Requerida",
+                    maxlength:"No puede ser mas de 2 digitos",
+                    number:"Solo puede ingresar numeros"
+                },
+                cedula:{
+                    required:"La cedula es Requerida",
+                    nowhitespace:"No deje espacio en blanco",
+                    number:"Solo puede ingresar numeros"
+                }
+                }
+                
+        })
+    });
+    </script>
+    <script>
+        const print =()=>{
+        const cedula = document.getElementById("cedula").value;
+        const email = document.getElementById("email").value;
+        const edad = document.getElementById("edad").value;
+        const login = document.getElementById("login").value;
+        const password = document.getElementById("password").value;
+        console.log(cedula,"\n",email,"\n",edad,"\n",login,"\n",password);
+        }
+        function limpiar() {
+        let cedula = document.getElementById("cedula").value = "";
+        let email = document.getElementById("email").value = "";
+        let edad = document.getElementById("edad").value = "";
+        let login = document.getElementById("login").value="";
+        let password = document.getElementById("password").value="";
+        let cpassword = document.getElementById("cpassword").value="";
+        }
+    </script>
+
+
+</body>
+</html>
